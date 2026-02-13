@@ -3,7 +3,7 @@ clear;
 close all;
 
 num_samples = 1000;
-
+rng(42);
 positions = zeros(num_samples,3);
 
 for i = 1:num_samples

@@ -6,9 +6,9 @@
 - Estimate reachable workspace via Monte Carlo sampling
 
 ## Results
-- Horizontal reach ≈ 0.93 m
-- Max vertical reach ≈ 1.00 m
-- Min vertical reach ≈ -0.83 m
+- Horizontal reach ≈ 0.932 m
+- Max vertical reach ≈ 0.9925 m
+- Min vertical reach ≈ -0.8094 m
 - Rotation matrix determinant verified as 1
 
 ## Conclusion
