@@ -2,6 +2,8 @@ clc;
 clear;
 close all;
 
+addpath(genpath(pwd))
+
 % Example joint configuration (in radians)
 theta_vals = [0, -pi/4, pi/3, -pi/6, pi/4, 0];
 

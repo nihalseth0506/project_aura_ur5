@@ -34,4 +34,4 @@ title('UR5 Reachable Workspace (Sampled)');
 grid on;
 axis equal;
 
-saveas(gcf, '../../media/images/workspace_sprint1.png');
+%saveas(gcf, '../../media/images/workspace_sprint1.png');

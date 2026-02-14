@@ -2,6 +2,8 @@ clc;
 clear;
 close all;
 
+addpath(genpath(pwd))
+
 % Declare symbolic variables
 syms theta d a alpha real
 
