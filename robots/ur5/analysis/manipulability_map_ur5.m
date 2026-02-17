@@ -42,3 +42,9 @@ colorbar;
 grid on;
 axis equal;
 view(3);
+
+exportgraphics(gcf, ...
+    'media/images/sprint2/manipulability_map_sprint2.png', ...
+    'Resolution',300);
+
+disp("Manipulability map saved as sprint2 image.");

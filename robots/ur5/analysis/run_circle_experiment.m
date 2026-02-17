@@ -28,6 +28,7 @@ q = q_init;
 error_history = zeros(steps,1);
 qdot_norm = zeros(steps,1);
 manip_history = zeros(steps,1);
+trajectory = zeros(steps,3);
 
 for k = 1:steps
     
@@ -71,17 +72,27 @@ for k = 1:steps
     % Store
     error_history(k) = norm(e);
     qdot_norm(k) = norm(qdot);
-    
+    trajectory(k,:) = x';
+
 end
 
 % Return full data for plotting
 results.error_history = error_history;
-results.qdot_norm = qdot_norm;
+results.qdot_norm     = qdot_norm;
 results.manip_history = manip_history;
+results.trajectory    = trajectory;
 
 % Summary metrics
-results.max_error = max(error_history(100:end));
-results.max_qdot  = max(qdot_norm);
+results.max_error  = max(error_history(100:end));
+results.max_qdot   = max(qdot_norm);
 results.mean_manip = mean(manip_history);
+
+% Store parameters for external plotting
+results.dt    = dt;
+results.steps = steps;
+results.r     = r;
+results.omega = omega;
+results.x0    = x0;
+
 
 end
