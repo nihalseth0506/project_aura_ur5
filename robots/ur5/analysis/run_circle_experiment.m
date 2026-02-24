@@ -1,4 +1,4 @@
-function results = run_circle_experiment(q_init, mode)
+function results = run_circle_experiment(q_init, mode, r)
 
 % mode = 'fixed' OR 'adaptive'
 
@@ -6,7 +6,9 @@ function results = run_circle_experiment(q_init, mode)
 x0 = T(1:3,4);
 
 % Circle parameters
-r = 0.03;
+if nargin < 3
+    r = 0.2;  % default
+end
 omega = 2*pi/5;
 dt = 0.01;
 total_time = 5;
@@ -30,6 +32,9 @@ trajectory     = zeros(steps,3);
 
 q_history      = zeros(6,steps);
 qdot_history   = zeros(6,steps);
+qdot_prev = zeros(6,1);
+tau_history = zeros(6,steps);
+power_history = zeros(steps,1);
 
 for k = 1:steps
     
@@ -66,7 +71,7 @@ for k = 1:steps
     
     % Integrate
     q = q + qdot * dt;
-    
+
     error_history(k) = norm(e);
     qdot_norm(k)     = norm(qdot);
     trajectory(k,:)  = x';

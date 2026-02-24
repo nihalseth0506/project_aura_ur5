@@ -91,6 +91,92 @@ Sprint 2 demonstrates singularity-aware motion control behavior.
 
 ---
 
+# Sprint 3 – Inverse Dynamics & Energy Optimization ✅
+
+Sprint 3 extends the framework from velocity-level control to full rigid-body dynamic modeling and energy analysis.
+
+The objective was to evaluate actuation effort, power flow, and trajectory efficiency under varying motion conditions.
+
+## Objectives
+
+- Implement full inverse dynamics model  
+- Compute joint torques using rigid-body dynamics  
+- Incorporate mass matrix M(q), Coriolis matrix C(q, q̇), and gravity vector G(q)  
+- Analyze mechanical power and total energy consumption  
+- Perform trajectory radius scaling study  
+- Compare Fixed vs Adaptive damping from an energy perspective  
+
+---
+
+## Key Implementations
+
+### Inverse Dynamics Model
+
+The manipulator torque model was implemented as:
+
+τ = M(q)q̈ + C(q,q̇)q̇ + G(q)
+
+Where:
+
+- M(q) → configuration-dependent mass matrix  
+- C(q,q̇) → Coriolis and centrifugal effects  
+- G(q) → gravity torque vector  
+
+Joint accelerations were computed numerically from joint velocity history.
+
+---
+
+### Mechanical Power & Energy Computation
+
+For each motion:
+
+- Instantaneous mechanical power computed as:
+
+  P = τᵀ q̇
+
+- Total mechanical energy computed via numerical integration  
+
+This enabled direct evaluation of actuation effort during trajectory execution.
+
+---
+
+### Radius Scaling Study
+
+Circular trajectories were evaluated for:
+
+r ∈ {0.03, 0.1, 0.2, 0.3} m
+
+For each radius and damping strategy:
+
+- Total mechanical energy  
+- RMS joint torque norm  
+- RMS mechanical power  
+- Energy per meter traveled  
+- RMS Cartesian tracking error  
+
+---
+
+## Experimental Observations
+
+- Torque demand increases with trajectory radius  
+- Power consumption grows nonlinearly with motion amplitude  
+- Energy per meter reveals efficiency degradation at larger radii  
+- Adaptive damping improves tracking robustness  
+- Fixed damping can be more energy-efficient in well-conditioned regions  
+- Shoulder joint (τ₂) dominates gravitational loading  
+
+Detailed dynamic visualization includes:
+
+- Joint torque norm over time  
+- Mechanical power profile  
+- Individual joint torque contributions  
+
+---
+
+Sprint 3 establishes a complete energy-aware dynamic evaluation framework.
+
+---
+
 ## Author
 
 **Nihal Sanjay Seth**
@@ -99,6 +185,7 @@ Sprint 2 demonstrates singularity-aware motion control behavior.
 
 ## Project Status
 
-Version: v2.0  
+Version: v3.0  
 Sprint 1 – Complete  
 Sprint 2 – Complete  
+Sprint 3 - Complete

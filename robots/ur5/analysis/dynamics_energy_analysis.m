@@ -44,26 +44,64 @@ energy = sum(power) * dt;
 disp("Total Mechanical Energy (Joules):");
 disp(energy);
 
-% Plot torque norm
-figure;
+%% =========================================
+%  CONSOLIDATED SPRINT 3 DYNAMICS FIGURE
+% =========================================
+
+figure('Color','w','Position',[200 100 1000 800]);
+
+tiledlayout(3,1,'TileSpacing','compact','Padding','compact');
+
+%% --- 1. Torque Norm ---
+nexttile;
 plot(vecnorm(tau_hist),'LineWidth',2);
 title('Joint Torque Norm Over Time');
-xlabel('Step');
-ylabel('||tau||');
+ylabel('||\tau|| (Nm)');
 grid on;
+box on;
+set(gca,'FontSize',12,'LineWidth',1.2)
 
-% Plot power
-figure;
+% Add margin
+ax = gca;
+x_margin = 0.05 * range(xlim);
+y_margin = 0.08 * range(ylim);
+xlim([min(xlim)-x_margin, max(xlim)+x_margin])
+ylim([min(ylim)-y_margin, max(ylim)+y_margin])
+
+%% --- 2. Mechanical Power ---
+nexttile;
 plot(power,'LineWidth',2);
 title('Mechanical Power Over Time');
-xlabel('Step');
 ylabel('Power (W)');
 grid on;
+box on;
+set(gca,'FontSize',12,'LineWidth',1.2)
 
-figure;
-plot(tau_hist','LineWidth',1.5);
+ax = gca;
+x_margin = 0.05 * range(xlim);
+y_margin = 0.08 * range(ylim);
+xlim([min(xlim)-x_margin, max(xlim)+x_margin])
+ylim([min(ylim)-y_margin, max(ylim)+y_margin])
+
+%% --- 3. Individual Joint Torques ---
+nexttile;
+plot(tau_hist','LineWidth',1.4);
 title('Individual Joint Torques');
 xlabel('Step');
 ylabel('Torque (Nm)');
-legend('\tau_1','\tau_2','\tau_3','\tau_4','\tau_5','\tau_6');
+legend('\tau_1','\tau_2','\tau_3','\tau_4','\tau_5','\tau_6','Location','eastoutside');
 grid on;
+box on;
+set(gca,'FontSize',12,'LineWidth',1.2)
+
+ax = gca;
+x_margin = 0.05 * range(xlim);
+y_margin = 0.08 * range(ylim);
+xlim([min(xlim)-x_margin, max(xlim)+x_margin])
+ylim([min(ylim)-y_margin, max(ylim)+y_margin])
+
+sgtitle('UR5 Inverse Dynamics Analysis — Circular Motion (r = 0.2 m)','FontSize',14,'FontWeight','bold');
+
+exportgraphics(gcf, ...
+'media/images/sprint3/dynamics_analysis_r003_sprint3.png', ...
+'Resolution',300);
