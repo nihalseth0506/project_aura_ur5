@@ -1,10 +1,11 @@
-function X = interpolate_cartesian_segment(x_start, x_end, steps)
+function X = interpolate_cartesian_segment(x0, x1, N)
 
-X = zeros(3,steps);
+t = linspace(0,1,N);
+X = zeros(3,N);
 
-for i = 1:steps
-    s = (i-1)/(steps-1);
-    X(:,i) = (1-s)*x_start + s*x_end;
+for i = 1:N
+    s = 10*t(i)^3 - 15*t(i)^4 + 6*t(i)^5;  % minimum jerk
+    X(:,i) = x0 + s*(x1 - x0);
 end
 
 end

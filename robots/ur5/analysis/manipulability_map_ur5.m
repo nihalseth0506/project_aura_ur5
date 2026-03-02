@@ -40,7 +40,7 @@ zlabel('Z (m)');
 title('UR5 Manipulability Distribution');
 colorbar;
 grid on;
-axis equal;
+axis equal;. 
 view(3);
 
 exportgraphics(gcf, ...

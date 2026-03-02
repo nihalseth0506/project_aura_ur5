@@ -177,6 +177,131 @@ Sprint 3 establishes a complete energy-aware dynamic evaluation framework.
 
 ---
 
+# Sprint 4 – Payload-Aware Pick & Place Energy Analysis ✅
+
+Sprint 4 transitions Project AURA from trajectory-based dynamic evaluation to **task-level manipulation analysis under variable payload conditions**.
+
+The focus shifts from circular motion studies to a realistic industrial pick-and-place operation with dynamic payload switching.
+
+---
+
+## Objectives
+
+- Implement task-level Cartesian pick-and-place execution  
+- Integrate real-time payload switching (grip / release)  
+- Extend inverse dynamics to include external payload mass  
+- Compare torque distribution with and without load  
+- Quantify mechanical energy increase due to payload  
+- Build full simulation environment (tables, object, gripper)  
+- Export reproducible graphs and video documentation  
+
+---
+
+## System Extension
+
+### Payload-Aware Inverse Dynamics
+
+During task execution:
+
+- At **"grip" phase** → payload mass activated  
+- At **"release" phase** → payload mass removed  
+
+The dynamic model becomes:
+
+τ = M(q)q̈ + C(q,q̇)q̇ + G(q) + τ_payload
+
+This enables:
+
+- Realistic gravity compensation  
+- Proper torque redistribution across joints  
+- Task-phase dependent dynamic behavior  
+
+---
+
+## Energy Computation Strategy
+
+Absolute mechanical energy was computed as:
+
+P = |τᵀ q̇|  
+E = ∑ P dt  
+
+Using absolute power prevents cancellation during deceleration phases and reflects realistic actuator energy consumption.
+
+---
+
+## Experimental Setup
+
+### Task Phases
+
+1. Approach pick  
+2. Lower  
+3. Grip  
+4. Lift  
+5. Transport  
+6. Lower  
+7. Release  
+8. Return  
+
+**Payload mass:** 5 kg  
+**Controller:** Adaptive Damped Least Squares  
+**Sampling time:** 0.02 s  
+
+---
+
+## Results
+
+### Total Energy Consumption
+
+| Case         | Energy (J) |
+|-------------|------------|
+| No Payload  | 25.751 J   |
+| With Payload| 33.598 J   |
+
+### Energy Increase
+
++30.47%
+
+---
+
+## Torque Distribution Observations
+
+- Shoulder joints (τ₂, τ₃) show dominant increase  
+- Base joint minimally affected  
+- Wrist joints nearly unchanged  
+- Load influence appears primarily during transport phase  
+- Gravitational effects visible in torque plateaus  
+
+This aligns with expected industrial manipulator behavior.
+
+---
+
+## Deliverables
+
+Automatically exported to:
+media/images/sprint4/
+
+- Torque norm comparison  
+- Individual joint torque comparison  
+- Energy comparison bar graph  
+- Full pick-and-place simulation video  
+
+---
+
+## Engineering Significance
+
+Sprint 4 establishes:
+
+- Task-level dynamic validation  
+- Quantified energy impact of payload  
+- Modular architecture for external force modeling  
+- Transition from motion feasibility → task-aware energy evaluation  
+
+Project AURA now integrates:
+
+Kinematics → Differential Control → Full Dynamics → Task-Level Energy Analysis
+
+---
+
 ## Author
 
 **Nihal Sanjay Seth**
@@ -185,7 +310,9 @@ Sprint 3 establishes a complete energy-aware dynamic evaluation framework.
 
 ## Project Status
 
-Version: v3.0  
-Sprint 1 – Complete  
-Sprint 2 – Complete  
-Sprint 3 - Complete
+Version: v4.0  
+
+Sprint 1 – Kinematic Modeling – Complete  
+Sprint 2 – Differential Kinematics & Robust Control – Complete  
+Sprint 3 – Inverse Dynamics & Energy Optimization – Complete  
+Sprint 4 – Payload-Aware Task-Level Energy Analysis – Complete
