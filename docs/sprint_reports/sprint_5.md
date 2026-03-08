@@ -229,6 +229,13 @@ Desired and actual end-effector trajectories are plotted using an XY graph.
 
 This provides visual confirmation of tracking accuracy and controller performance.
 
+### Simulation Videos
+
+Due to GitHub file size limits, the full simulation recordings are hosted externally.
+
+📹 Sprint 5 Simulation Demonstrations  
+https://drive.google.com/drive/folders/1pYAJ0i50DlaDnV5hHvAa-gQohSg_l6TZ?usp=drive_link
+
 ---
 
 ## Energy Consumption Comparison
