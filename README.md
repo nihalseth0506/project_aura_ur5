@@ -302,6 +302,130 @@ Kinematics → Differential Control → Full Dynamics → Task-Level Energy Anal
 
 ---
 
+# Sprint 5 – Multi-Trajectory Tracking & Energy–Dexterity Analysis ✅
+
+Sprint 5 extends Project AURA from single-task motion execution to **multi-trajectory comparative analysis**, enabling evaluation of how different motion geometries affect **robot energy consumption and kinematic dexterity**.
+
+The focus shifts from payload-dependent task execution toward **trajectory-dependent dynamic behavior**, while maintaining the full control and dynamics pipeline developed in previous sprints.
+
+---
+
+## Objectives
+
+- Implement a modular **multi-trajectory generator**
+- Execute Cartesian trajectory tracking for multiple path geometries
+- Monitor **manipulability during motion**
+- Compare **energy consumption across trajectories**
+- Integrate **singularity detection with real-time warning**
+- Build a clean **Simulink control architecture** representing a realistic robot control stack
+
+---
+
+## System Extension
+
+### Multi-Trajectory Generator
+
+Four Cartesian trajectories were implemented:
+
+- Circle  
+- Square  
+- Figure-8  
+- Spiral  
+
+A Simulink knob allows **interactive switching between trajectory types** during simulation.
+
+Each trajectory produces different:
+
+- velocity profiles
+- joint torques
+- energy consumption
+- manipulability behavior
+
+---
+
+### Cartesian Tracking Pipeline
+
+The complete control pipeline implemented in previous sprints was reused:
+
+Cartesian Controller  
+→ Jacobian Inverse Kinematics (Damped Least Squares)  
+→ Computed Torque Control  
+→ UR5 Dynamic Plant  
+
+This structure ensures that the robot motion arises from **true dynamic simulation rather than scripted animation**.
+
+---
+
+### Manipulability Monitoring
+
+Robot dexterity is evaluated using the Jacobian singular values:
+
+w = ∏ σᵢ
+
+Low manipulability indicates proximity to **kinematic singularities**.
+
+A **real-time warning indicator** activates when the robot approaches low-dexterity regions.
+
+---
+
+### Energy Evaluation
+
+Mechanical power is computed as:
+
+P = |τᵀ q̇|
+
+Total energy:
+
+E = ∑ P dt
+
+This enables direct comparison of **trajectory energy efficiency**.
+
+---
+
+## Experimental Observations
+
+Comparative analysis of trajectories revealed:
+
+- Smooth trajectories require **lower torque variation**
+- Sharp path transitions increase **energy demand**
+- Large workspace coverage increases **actuation effort**
+- Manipulability varies significantly across trajectories
+- Spiral trajectories explore wider workspace regions and show **larger energy consumption**
+
+Energy comparison and manipulability trends were exported as reproducible plots.
+
+---
+
+## Deliverables
+
+Automatically exported to:
+
+media/images/sprint5/
+
+- Trajectory energy comparison plot  
+- Manipulability comparison across trajectories  
+- Energy vs time curves  
+- Full multi-trajectory simulation video  
+
+---
+
+## Engineering Significance
+
+Sprint 5 establishes a **trajectory-aware analysis framework** where robot performance can be evaluated based on motion geometry.
+
+Project AURA now integrates:
+
+Kinematics → Differential Control → Dynamics → Task-Level Analysis → Trajectory-Level Energy & Dexterity Evaluation
+
+This framework forms the basis for future research directions such as:
+
+- energy-optimal trajectory planning  
+- manipulability-aware motion planning  
+- obstacle avoidance strategies  
+- digital twin integration  
+
+---
+
 ## Author
 
 **Nihal Sanjay Seth**
@@ -310,9 +434,10 @@ Kinematics → Differential Control → Full Dynamics → Task-Level Energy Anal
 
 ## Project Status
 
-Version: v4.0  
+Version: v5.0  
 
 Sprint 1 – Kinematic Modeling – Complete  
 Sprint 2 – Differential Kinematics & Robust Control – Complete  
 Sprint 3 – Inverse Dynamics & Energy Optimization – Complete  
 Sprint 4 – Payload-Aware Task-Level Energy Analysis – Complete
+Sprint 5 – Multi-Trajectory Tracking & Energy–Dexterity Analysis – Complete

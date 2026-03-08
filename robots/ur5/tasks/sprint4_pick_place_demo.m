@@ -206,4 +206,4 @@ xline(place_index,'g--','LineWidth',2);
 % Animate
 %% -------------------------------
 
-animate_ur5_stick(q_traj, waypoints, payload_flag);
+%animate_ur5_stick(q_traj, waypoints, payload_flag);
