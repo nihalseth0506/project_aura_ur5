@@ -426,6 +426,165 @@ This framework forms the basis for future research directions such as:
 
 ---
 
+# Sprint 6 – Trajectory Optimization with Energy–Manipulability Trade-off & Adaptive Sampling ✅
+
+Sprint 6 advances Project AURA from trajectory analysis to **trajectory selection and optimization**.
+
+Instead of executing predefined trajectories, the system now **generates, evaluates, filters, and optimizes multiple candidate paths** based on energy efficiency, kinematic dexterity, and physical feasibility.
+
+The framework evolves from motion execution to **intelligent trajectory optimization under physical and kinematic constraints**, bridging the gap between simulation and real-world robotic decision-making.
+
+---
+
+## Objectives
+
+- Generate multiple candidate trajectories between the same start and goal
+- Evaluate trajectories using **energy and manipulability metrics**
+- Implement **constraint-based rejection** (singularity & torque limits)
+- Formulate a **time-integrated cost function**
+- Select optimal trajectory under:
+  - Energy-only criterion
+  - Energy + Manipulability criterion
+- Implement **adaptive sampling** to refine trajectory quality
+- Visualize valid, rejected, and optimal trajectories
+
+---
+
+## System Extension
+
+### Trajectory Sampling
+
+Two modes are implemented:
+
+#### Fixed Mode
+- Line  
+- Arc  
+- Spline  
+
+#### Random Mode
+- Multiple trajectories generated using **quadratic Bézier curves**
+- Each trajectory defined by a random control point:
+
+x(t) = (1 − τ)²P₀ + 2(1 − τ)τP₁ + τ²P₂
+
+Where:
+- P₀ = start  
+- P₁ = control point  
+- P₂ = goal  
+- τ = normalized time  
+
+---
+
+### Constraint-Based Filtering
+
+Each trajectory is validated using:
+
+- **Manipulability threshold**
+  
+  w < 0.0015 → REJECTED  
+
+- **Torque limit**
+
+  |τ| > 150 → REJECTED  
+
+Rejected trajectories are excluded from optimization but remain visible in visualization.
+
+---
+
+### Cost Function Formulation
+
+A **time-integrated cost function** is used:
+
+J = ∫ ( |P(t)| + λ / w(t) ) dt
+
+Where:
+
+- P(t) = dE/dt → instantaneous power  
+- w(t) = manipulability  
+- λ = weighting factor  
+
+This ensures:
+
+- Energy-efficient motion  
+- Avoidance of singular configurations  
+
+---
+
+### Adaptive Sampling (Key Innovation)
+
+After initial evaluation:
+
+1. Best trajectory (based on cost) is selected  
+2. Its control point is extracted  
+3. New trajectories are generated locally:
+
+P₁(new) = P₁(best) + noise  
+
+This results in:
+
+- Local search around optimal region  
+- Improved trajectory refinement  
+- Reduced dependence on random sampling  
+
+---
+
+## Visualization Strategy
+
+- **Valid trajectories** → solid lines  
+- **Rejected trajectories** → dashed grey  
+- **Adaptive trajectories** → dotted blue  
+- **Optimal trajectory** → bold dashed black  
+
+Two comparisons are shown:
+
+- Energy-optimal path  
+- Energy + Manipulability optimal path  
+
+---
+
+## Experimental Observations
+
+- Energy-optimal paths may pass through **low manipulability regions**  
+- Cost-based optimization produces **safer and more stable trajectories**  
+- Adaptive sampling leads to **trajectory clustering around optimal region**  
+- Constraint filtering prevents unsafe motion execution  
+- Manipulability plays a critical role in real-world feasibility  
+
+---
+
+## Deliverables
+
+Automatically exported to:
+
+docs/images/sprint6/
+
+- Fixed trajectory comparison  
+- Random + adaptive trajectory optimization  
+- Optimal path visualization with constraints  
+
+---
+
+## Engineering Significance
+
+Sprint 6 represents a major transition:
+
+Trajectory Execution → Trajectory Optimization
+
+The system now:
+
+- Generates multiple motion candidates  
+- Filters infeasible trajectories  
+- Optimizes based on performance metrics  
+- Refines solutions using adaptive sampling  
+
+---
+
+Project AURA now integrates:
+
+Kinematics → Differential Control → Dynamics → Task-Level Analysis → Trajectory Analysis → **Trajectory Optimization**
+
+---
+
 ## Author
 
 **Nihal Sanjay Seth**
@@ -434,10 +593,11 @@ This framework forms the basis for future research directions such as:
 
 ## Project Status
 
-Version: v5.0  
+Version: v6.0  
 
 Sprint 1 – Kinematic Modeling – Complete  
 Sprint 2 – Differential Kinematics & Robust Control – Complete  
 Sprint 3 – Inverse Dynamics & Energy Optimization – Complete  
-Sprint 4 – Payload-Aware Task-Level Energy Analysis – Complete
-Sprint 5 – Multi-Trajectory Tracking & Energy–Dexterity Analysis – Complete
+Sprint 4 – Payload-Aware Task-Level Energy Analysis – Complete  
+Sprint 5 – Multi-Trajectory Tracking & Energy–Dexterity Analysis – Complete  
+Sprint 6 – Trajectory Optimization with Adaptive Sampling – Complete  

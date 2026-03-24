@@ -1,7 +1,7 @@
 clc;
 clear;
 close all;
-
+addpath(genpath(pwd));
 rng(42);
 
 num_samples = 1000;
@@ -40,7 +40,7 @@ zlabel('Z (m)');
 title('UR5 Manipulability Distribution');
 colorbar;
 grid on;
-axis equal;. 
+axis equal;
 view(3);
 
 exportgraphics(gcf, ...
