@@ -1,0 +1,3 @@
+[console_scripts]
+controller_node = aura_s7.controller_node:main
+trajectory_planner = aura_s7.trajectory_planner_node:main

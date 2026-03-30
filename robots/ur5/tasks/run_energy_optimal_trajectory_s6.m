@@ -3,7 +3,7 @@ clear
 close all
 
 addpath(genpath(pwd))
-
+rng(1);
 model = 'ur5_controller';
 load_system(model)
 
@@ -13,7 +13,7 @@ start_pos = [0.4 0.1 0.3];
 goal_pos  = [0.5 -0.2 0.15];
 
 %% Mode selection
-mode = 'fixed';   % 'fixed' or 'random'
+mode = 'random';   % 'fixed' or 'random'
 
 %% Run optimization
 
@@ -115,6 +115,45 @@ end
 % Best cost trajectory
 best_cost = best_cost_traj.points;
 
+% =========================
+% EXPORT BEST TRAJECTORY FOR ROS2
+% =========================
+
+% % Use best cost trajectory
+xd = best_cost_traj.points;
+
+% Ensure same start
+xd(1,:) = start_pos;
+
+% Time step (must match ROS2)
+dt = 0.02;
+
+% Velocity
+xd_dot = [zeros(1,3); diff(xd)/dt];
+
+% Smooth velocity
+xd_dot = smoothdata(xd_dot, 'movmean', 5);
+
+% Limit velocity
+v_max = 0.5;
+xd_dot = max(min(xd_dot, v_max), -v_max);
+
+% Combine
+data = [xd, xd_dot];
+
+% 🔥 SAVE TWO FILES
+
+% (1) For ROS2
+writematrix(data, ...
+    'D:/projects/project_aura_ur5/robots/data_logs/trajectory.csv');
+
+% (2) For comparison (PLANNED ONLY)
+writematrix(xd, ...
+    'D:/projects/project_aura_ur5/robots/data_logs/planned_traj_s7.csv');
+
+fprintf("Trajectory exported for ROS2 + comparison\n");
+
+%%
 plot3(best_cost(:,1),best_cost(:,2),best_cost(:,3),...
     'k--','LineWidth',3)
 
@@ -187,20 +226,20 @@ annotation('textbox',[0.4625 0.15 0.3 0.725], ...
 % SAVE FIGURE (HIGH QUALITY)
 %% =========================
 
-% Create folder if it doesn't exist
-save_folder = fullfile(pwd,'media','images','sprint6');
-
-if ~exist(save_folder, 'dir')
-    mkdir(save_folder);
-end
-
-% Set figure to full screen
-set(gcf, 'Units', 'normalized', 'OuterPosition', [0 0 1 1]);
-set(gcf,'Color','w');  % white background
-% File name based on mode
-filename = fullfile(save_folder, ['sprint6_' mode '.png']);
-
-% Save high resolution image
-exportgraphics(gcf, filename, 'Resolution', 300);
-
-fprintf("Figure saved at: %s\n", filename);
+% % Create folder if it doesn't exist
+% save_folder = fullfile(pwd,'media','images','sprint6');
+% 
+% if ~exist(save_folder, 'dir')
+%     mkdir(save_folder);
+% end
+% 
+% % Set figure to full screen
+% set(gcf, 'Units', 'normalized', 'OuterPosition', [0 0 1 1]);
+% set(gcf,'Color','w');  % white background
+% % File name based on mode
+% filename = fullfile(save_folder, ['sprint6_' mode '.png']);
+% 
+% % Save high resolution image
+% exportgraphics(gcf, filename, 'Resolution', 300);
+% 
+% fprintf("Figure saved at: %s\n", filename);

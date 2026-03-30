@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: aura-s7
+Version: 1.0.0
+Summary: ROS2 trajectory tracking controller for UR5 using MATLAB-generated optimal trajectories (Project AURA Sprint 7)
+Maintainer: Nihal Sanjay Seth
+Maintainer-email: seth.nihal.work@gmail.com
+License: MIT
+Provides-Extra: test

@@ -1,0 +1,14 @@
+package.xml
+setup.cfg
+setup.py
+../../build/aura_bringup/aura_bringup.egg-info/PKG-INFO
+../../build/aura_bringup/aura_bringup.egg-info/SOURCES.txt
+../../build/aura_bringup/aura_bringup.egg-info/dependency_links.txt
+../../build/aura_bringup/aura_bringup.egg-info/requires.txt
+../../build/aura_bringup/aura_bringup.egg-info/top_level.txt
+../../build/aura_bringup/aura_bringup.egg-info/zip-safe
+aura_bringup/__init__.py
+resource/aura_bringup
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

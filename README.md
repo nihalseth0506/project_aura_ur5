@@ -9,7 +9,7 @@
 
 Project AURA is a structured robotics engineering initiative focused on developing a singularity-aware, energy-efficient motion planning and control framework for a 6-DOF UR5 industrial manipulator.
 
-The project is executed in clearly defined technical sprints, progressing from foundational kinematic modeling toward robust differential control strategies.
+The project is executed in clearly defined technical sprints, progressing from foundational kinematic modeling toward real-time ROS2-based trajectory execution and validation.
 
 ---
 
@@ -585,15 +585,130 @@ Kinematics → Differential Control → Dynamics → Task-Level Analysis → Tra
 
 ---
 
-## Author
+# Sprint 7 – ROS2-Based Trajectory Execution & Real-Time Tracking ✅
 
-**Nihal Sanjay Seth**
+Sprint 7 completes Project AURA by transitioning from offline trajectory optimization to **real-time robotic execution and validation using ROS2**.
+
+The optimal trajectory generated in Sprint 6 is exported and executed through a ROS2 control pipeline, enabling **closed-loop tracking, synchronization, and performance evaluation**.
+
+---
+
+## Objectives
+
+- Execute MATLAB-generated optimal trajectories in ROS2  
+- Convert Cartesian trajectories into joint-space motion  
+- Implement real-time feedback control  
+- Ensure synchronized trajectory execution  
+- Validate tracking accuracy using quantitative metrics  
+
+---
+
+## System Architecture
+
+The ROS2 system consists of two core nodes:
+
+### Trajectory Planner Node
+- Reads optimal trajectory from CSV  
+- Publishes desired position and velocity  
+- Waits for controller readiness before sending next point  
+
+### Controller Node
+- Receives desired trajectory  
+- Computes joint velocities using Jacobian-based inverse kinematics  
+- Applies feedback correction  
+- Publishes:
+  - Joint states  
+  - End-effector pose  
+  - Path for visualization  
+
+A synchronization loop ensures stable execution:
+planner → trajectory → controller → feedback → planner
+
+---
+
+## Control Strategy
+
+A velocity-based control law is implemented:
+v = x_dot_desired + Kp * (x_desired - x_current)
+
+Joint velocities are computed using a damped pseudo-inverse Jacobian:
+J^+ = J^T (J J^T + λI)^(-1)
+
+This ensures:
+
+- Stability near singularities  
+- Smooth trajectory tracking  
+
+---
+
+## Synchronization Mechanism
+
+- Controller publishes `/controller_ready`  
+- Planner sends next trajectory point only when ready  
+
+This prevents:
+
+- Skipped trajectory points  
+- Timing mismatch  
+- Unstable motion  
+
+---
+
+## Results
+
+### Tracking Performance
+
+- Mean Error: ~0.0141 m  
+- Max Error: ~0.0192 m  
+
+### Observations
+
+- Strong alignment between planned and executed trajectories  
+- Smooth and stable motion  
+- Minor deviations due to discretization and control limits  
+
+---
+
+## Engineering Significance
+
+Sprint 7 establishes a complete robotics execution pipeline:
+
+- MATLAB → Trajectory Optimization  
+- ROS2 → Real-Time Control  
+- Feedback → Error Correction  
+- Logging → Performance Validation  
+
+---
+
+## Conclusion
+
+Sprint 7 completes the transition from:
+
+**Trajectory Optimization → Real-Time Robotic Execution**
+
+Project AURA now achieves:
+
+- End-to-end motion pipeline  
+- Real-time trajectory tracking  
+- Quantitative validation of performance  
+- ROS2-based modular control architecture  
+
+---
+
+## 🚀 Future Work (Bonus Sprint)
+
+A potential **Sprint 8** can extend this work to:
+
+- Full UR5 simulation in Gazebo  
+- Physics-based validation  
+- Sensor integration  
+- Digital twin development  
 
 ---
 
 ## Project Status
 
-Version: v6.0  
+Version: v7.0  
 
 Sprint 1 – Kinematic Modeling – Complete  
 Sprint 2 – Differential Kinematics & Robust Control – Complete  
@@ -601,3 +716,15 @@ Sprint 3 – Inverse Dynamics & Energy Optimization – Complete
 Sprint 4 – Payload-Aware Task-Level Energy Analysis – Complete  
 Sprint 5 – Multi-Trajectory Tracking & Energy–Dexterity Analysis – Complete  
 Sprint 6 – Trajectory Optimization with Adaptive Sampling – Complete  
+Sprint 7 – ROS2-Based Trajectory Execution & Validation – Complete  
+
+🎯 **Project AURA Core Development Completed**
+
+🚀 *Future Extension:*  
+Sprint 8 – Gazebo-Based Simulation & Digital Twin (Planned)
+
+---
+
+## Author
+
+**Nihal Sanjay Seth**

@@ -1,0 +1,19 @@
+{
+    "ROS2.distro": "jazzy",
+    "python.autoComplete.extraPaths": [
+        "/media/sf_aura_shared/ros2_ws/install/aura_planner/lib/python3.12/site-packages",
+        "/media/sf_aura_shared/ros2_ws/install/aura_controller/lib/python3.12/site-packages",
+        "/media/sf_aura_shared/ros2_ws/install/aura_bringup/lib/python3.12/site-packages",
+        "/home/nihal/ros2_ws/build/my_py_pkg",
+        "/home/nihal/ros2_ws/install/my_py_pkg/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/media/sf_aura_shared/ros2_ws/install/aura_planner/lib/python3.12/site-packages",
+        "/media/sf_aura_shared/ros2_ws/install/aura_controller/lib/python3.12/site-packages",
+        "/media/sf_aura_shared/ros2_ws/install/aura_bringup/lib/python3.12/site-packages",
+        "/home/nihal/ros2_ws/build/my_py_pkg",
+        "/home/nihal/ros2_ws/install/my_py_pkg/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
